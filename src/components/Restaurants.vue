@@ -3,51 +3,100 @@
     <label for="Restaurants">Restaurants  : </label>
     <select  @change="restaurantMethod($event)">
       <option value="" selected disabled hidden>Select Restaurant </option>
-      <option v-for ="restaurant in restaurants1" :value='restaurant.name'>{{restaurant.name}}</option>
+      <option v-for ="restaurant in restaurants1.restaurants" :value='restaurant.name'>{{restaurant.name}}</option>
     </select>
+    <div class="map">
+      <l-map :zoom="zoom" :center="center">
+        <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
+        <l-marker v-for = "marker in restaurants1.markers":lat-lng="marker.position"
+        v-on:l-add="realMarkerAdd">
+        <l-popup :content="marker.tooltip"/>
+        </l-marker>
+      </l-map>
+    </div>
     <RestaurantDetail v-bind:restaurantDetail="selectedRestaurant"/>
   </div>
 </template>
 
 <script>
 import RestaurantDetail from './RestaurantDetail'
+import {LMap, LTileLayer, LMarker,LPopup } from 'vue2-leaflet'
+//import {v-map, v-tilelayer, v-marker } from 'vue2-leaflet'
+
 export default {
   name: "Restaurants",
   data(){
     return{
-      selectedRestaurant:{}
+      selectedRestaurant:{},
+      zoom:13,
+      //center: [L.latLng(]47.413220, -1.219482),
+      center: [55.858174, -4.244168],
+      url:'http://{s}.tile.osm.org/{z}/{x}/{y}.png',
+      attribution:'&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors',
+      //marker: L.latLng(47.413220, -1.219482),
+      //markers:[L.latLng(55.858174, -4.244168)]
     }
   },
   props: ["restaurants1"],
   components:{
-    RestaurantDetail
+    RestaurantDetail,LMap, LTileLayer, LMarker,LPopup
   },
   methods:{
     restaurantMethod: function(event){
       let selectedRes = event.target.value;
       this.selectedRestaurant = this.restaurants1.find(r => r.name == selectedRes);
-      console.log(this.selectedRestaurant);
+    },
+    realMarkerAdd: function(event){
+      Vue.nextTick(() => {
+      event.target.openPopup();
+    })
     }
   }
 }
-  </script>
+/*mounted(){
+console.log("mounted")
+let vm = this;
+setTimeout(function(){
+vm.init(vm.restaurants1);
+}, 5000);
+
+},*/
+
+/*,
+init(restaurants){
+console.log("called");
+let locations =  restaurants.map(res => res.location);
+for (var i = 0; i < locations.length; i++) {
+let marker = new L.latLng([locations[i].latitude,locations[i].longitude])
+this.markers.push(marker);
+}
+console.log(this.markers);
+}
+}*/
+
+
+</script>
 
 
 
-  <!-- Add "scoped" attribute to limit CSS to this component only -->
-  <style scoped>
-    h3 {
-      margin: 40px 0 0;
-    }
-    ul {
-      list-style-type: none;
-      padding: 0;
-    }
-    li {
-      display: inline-block;
-      margin: 0 10px;
-    }
-    a {
-      color: #42b983;
-    }
-  </style>
+<!-- Add "scoped" attribute to limit CSS to this component only -->
+<style scoped>
+h3 {
+  margin: 40px 0 0;
+}
+ul {
+  list-style-type: none;
+  padding: 0;
+}
+li {
+  display: inline-block;
+  margin: 0 10px;
+}
+a {
+  color: #42b983;
+}
+.map {
+  height: 95vh;
+  margin: 0;
+}
+</style>
