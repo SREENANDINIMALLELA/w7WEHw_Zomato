@@ -7,15 +7,14 @@
       <option v-for ="city in cities" :value='city.value'>{{city.name}}</option>
     </select>
     <br/>
-    <select>
-      <option value="" selected disabled hidden>Select Restaurant </option>
-      <option v-for ="restaurant in restaurants" :value='restaurant.name'>{{restaurant.name}}</option>
-    </select>
+    <Restaurants v-bind:restaurants1="restaurants"/>
   </div>
 
 </template>
 
 <script>
+import Restaurants from './components/Restaurants'
+
 export default {
   name: "app",
   data(){
@@ -31,6 +30,9 @@ export default {
       restaurants:[]
     }
   },
+  components: {
+   Restaurants
+ },
   methods: {
     cityMethod:function(event){
     let cityId = event.target.value

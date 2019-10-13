@@ -1,9 +1,17 @@
 <template lang="html">
-
+  <div>
+    <label for="Restaurants">Restaurants  : </label>
+  <select>
+    <option value="" selected disabled hidden>Select Restaurant </option>
+    <option v-for ="restaurant in restaurants1" :value='restaurant.name'>{{restaurant.name}}</option>
+  </select>
+</div>
 </template>
 
 <script>
 export default {
+  name: "Restaurants",
+  props: ["restaurants1"]
 }
 </script>
 
