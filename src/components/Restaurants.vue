@@ -44,7 +44,7 @@ export default {
   methods:{
     restaurantMethod: function(event){
       let selectedRes = event.target.value;
-      this.selectedRestaurant = this.restaurants1.find(r => r.name == selectedRes);
+      this.selectedRestaurant = this.restaurants1.restaurants.find(r => r.name == selectedRes);
     },
     realMarkerAdd: function(event){
       Vue.nextTick(() => {
@@ -53,26 +53,6 @@ export default {
     }
   }
 }
-/*mounted(){
-console.log("mounted")
-let vm = this;
-setTimeout(function(){
-vm.init(vm.restaurants1);
-}, 5000);
-
-},*/
-
-/*,
-init(restaurants){
-console.log("called");
-let locations =  restaurants.map(res => res.location);
-for (var i = 0; i < locations.length; i++) {
-let marker = new L.latLng([locations[i].latitude,locations[i].longitude])
-this.markers.push(marker);
-}
-console.log(this.markers);
-}
-}*/
 
 
 </script>
@@ -96,7 +76,7 @@ a {
   color: #42b983;
 }
 .map {
-  height: 95vh;
+  height: 60vh;
   margin: 0;
 }
 </style>

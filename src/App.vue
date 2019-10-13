@@ -4,7 +4,7 @@
   <div >
     <label for="cities">City  : </label>
     <select @change="cityMethod($event)" >
-      <!--<option value="" selected disabled hidden>Select city</option>-->
+      <option value="" selected disabled hidden>Select city</option>
       <option v-for ="city in cities" :value='city.value'>{{city.name}}</option>
     </select>
     <br/>
@@ -43,7 +43,6 @@ components: {
 methods: {
   cityMethod:function(event){
     let cityId = event.target.value
-    console.log(cityId);
     fetch('https://developers.zomato.com/api/v2.1/search?entity_id='+cityId+'&entity_type=city',{
       headers:{
         'user-key':'068ba0cac95a295a4ba5cd3909aa17c5'
@@ -51,7 +50,7 @@ methods: {
     })
     .then(response => response.json())
     .then(data => {
-      console.log(data);
+
 
       let markers = []
       let restaurants = data.restaurants.map(res => res.restaurant)
@@ -63,10 +62,10 @@ methods: {
         ps.lng = restaurants[i].location.longitude
         marker.position = ps
         marker.tooltip = restaurants[i].name
-        console.log(ps)
+
         markers.push(marker)
       }
-      console.log(markers);
+
       this.restaurantInfos.restaurants = restaurants
       this.restaurantInfos.markers = markers
     })
