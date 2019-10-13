@@ -1,28 +1,56 @@
-<template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+<template lang="html">
+
+  <div>
+    <label for="cities">City  : </label>
+    <select @change="cityMethod($event)" >
+      <option value="" selected disabled hidden>Select city</option>
+      <option v-for ="city in cities" :value='city.value'>{{city.name}}</option>
+    </select>
+    <br/>
+    <select>
+      <option value="" selected disabled hidden>Select Restaurant </option>
+      <option v-for ="restaurant in restaurants" :value='restaurant.name'>{{restaurant.name}}</option>
+    </select>
   </div>
+
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
 export default {
-  name: 'app',
-  components: {
-    HelloWorld
+  name: "app",
+  data(){
+
+    return{
+      cities:[
+        {name: 'Edinburgh',
+        value:76},
+        {name:'Glasgow',
+         value: 77
+       }
+      ],
+      restaurants:[]
+    }
+  },
+  methods: {
+    cityMethod:function(event){
+    let cityId = event.target.value
+    console.log(cityId);
+
+    fetch('https://developers.zomato.com/api/v2.1/search?entity_id='+cityId+'&entity_type=city',{
+      headers:{
+        'user-key':'068ba0cac95a295a4ba5cd3909aa17c5'
+      }
+    })
+    .then(response => response.json())
+    .then(data => {
+      console.log(data);
+      this.restaurants = data.restaurants.map(res => res.restaurant)
+    })
+
+    }
   }
 }
 </script>
 
-<style>
-#app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+<style lang="css" scoped>
 </style>
