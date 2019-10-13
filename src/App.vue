@@ -15,6 +15,7 @@
 <script>
 import Restaurants from './components/Restaurants'
 
+
 export default {
   name: "app",
   data(){
@@ -37,7 +38,6 @@ export default {
     cityMethod:function(event){
     let cityId = event.target.value
     console.log(cityId);
-
     fetch('https://developers.zomato.com/api/v2.1/search?entity_id='+cityId+'&entity_type=city',{
       headers:{
         'user-key':'068ba0cac95a295a4ba5cd3909aa17c5'
