@@ -1,6 +1,7 @@
 <template lang="html">
 <div>
-  {{restaurantDetail.name}}
+  <h1>{{restaurantDetail.name}}</h1>
+  <p>{{restaurantDetail.events_url}}</p>
 </div>
 </template>
 

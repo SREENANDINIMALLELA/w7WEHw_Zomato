@@ -1,11 +1,12 @@
 <template lang="html">
-  <div>
+  <div class="flex-container">
     <label for="Restaurants">Restaurants  : </label>
     <select  @change="restaurantMethod($event)">
       <option value="" selected disabled hidden>Select Restaurant </option>
       <option v-for ="restaurant in restaurants1.restaurants" :value='restaurant.name'>{{restaurant.name}}</option>
+      <!-- <option  v-for="(restaurant, index) in restaurants1" :value="restaurant.name" :key="index">{{restaurant.name}}</option> -->
     </select>
-    <div class="map">
+    <div class="map" >
       <l-map :zoom="zoom" :center="center">
         <l-tile-layer :url="url" :attribution="attribution"></l-tile-layer>
         <l-marker v-for = "marker in restaurants1.markers":lat-lng="marker.position"
@@ -76,7 +77,15 @@ a {
   color: #42b983;
 }
 .map {
-  height: 60vh;
-  margin: 0;
+  position: absolute;
+  top: 350px;
+  right:350px;
+  width: 70vh;
+  height: 50vh;
+  border: 3px solid #73AD21;
 }
+/* .flex-container {
+  display: flex;
+  background-color: DodgerBlue;
+} */
 </style>

@@ -1,16 +1,21 @@
 <template lang="html">
+  <div class="">
 
 
-  <div >
+  <div class="title">
+   <h1>Zomato</h1>
+</div>
+  <div class ="city" >
+
     <label for="cities">City  : </label>
     <select @change="cityMethod($event)" >
       <option value="" selected disabled hidden>Select city</option>
       <option v-for ="city in cities" :value='city.value'>{{city.name}}</option>
     </select>
-    <br/>
     <Restaurants v-bind:restaurants1="restaurantInfos"/>
   </div>
 
+</div>
 
 </template>
 
@@ -50,8 +55,6 @@ methods: {
     })
     .then(response => response.json())
     .then(data => {
-
-
       let markers = []
       let restaurants = data.restaurants.map(res => res.restaurant)
       //let locations =  restaurants.map(res => res.location);
@@ -76,5 +79,24 @@ methods: {
 </script>
 
 <style lang="css" scoped>
+h1 {
+  text-align: center;
+  list-style-position: inside;
+}
+.city , option{
+  text-align: center;
+  color: blue;
+
+}
+#app ,body{
+  background-color: red
+}
+.title,h1{
+ background-color: #cccccc;
+ padding-top: rgb(100, 0, 0);
+ background-size:cover;
+
+
+}
 
 </style>
