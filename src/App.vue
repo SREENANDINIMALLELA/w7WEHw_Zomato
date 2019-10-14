@@ -2,20 +2,20 @@
   <div class="">
 
 
-  <div class="title">
-   <h1>Zomato</h1>
-</div>
-  <div class ="city" >
+    <div class="title">
+      <h1>Zomato</h1>
+    </div>
+    <div class ="city" >
 
-    <label for="cities">City  : </label>
-    <select @change="cityMethod($event)" >
-      <option value="" selected disabled hidden>Select city</option>
-      <option v-for ="city in cities" :value='city.value'>{{city.name}}</option>
-    </select>
-    <Restaurants v-bind:restaurants1="restaurantInfos"/>
+      <label for="cities">City  : </label>
+      <select @change="cityMethod($event)" >
+        <option value="" selected disabled hidden>Select city</option>
+        <option v-for ="city in cities" :value='city.value'>{{city.name}}</option>
+      </select>
+      <Restaurants v-bind:restaurantsList="restaurantInfos"/>
+    </div>
+
   </div>
-
-</div>
 
 </template>
 
@@ -57,9 +57,8 @@ methods: {
     .then(data => {
       let markers = []
       let restaurants = data.restaurants.map(res => res.restaurant)
-      //let locations =  restaurants.map(res => res.location);
       for (var i = 0; i < restaurants.length; i++) {
-        let marker = {position: '', tooltip: ''}
+        let marker = {position:'', tooltip:''}
         let ps = {lat:'',lng:''}
         ps.lat = restaurants[i].location.latitude
         ps.lng = restaurants[i].location.longitude
@@ -92,11 +91,8 @@ h1 {
   background-color: red
 }
 .title,h1{
- background-color: #cccccc;
- padding-top: rgb(100, 0, 0);
- background-size:cover;
-
-
+  background-color: #cccccc;
+  padding-top: rgb(100, 0, 0);
 }
 
 </style>
